@@ -10,4 +10,4 @@ class Person(models.Model):
   salary = models.FloatField(null=True)
   memo = models.TextField()
   web_site = models.URLField(null = True, blank=True)
-  create_at = models.DateField(default = timezone.datetime.now)
+  create_at = models.DateTimeField(default = timezone.datetime.now)
