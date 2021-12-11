@@ -1,10 +1,11 @@
 from django.db import models
 from django.utils import timezone
+import pytz
 
 # Create your models here.
 class BaseMeta(models.Model):
-  create_at = models.DateTimeField(default=timezone.now)
-  update_at = models.DateTimeField(default=timezone.now)
+  create_at = models.DateTimeField(default=timezone.now(pytz.timezone('Asia/Tokyo')))
+  update_at = models.DateTimeField(default=timezone.now(pytz.timezone('Asia/Tokyo')))
 
   class Meta:
     abstract = True
@@ -16,9 +17,12 @@ class Person(BaseMeta):
   email = models.EmailField(db_index=True)
   salary = models.FloatField(null=True)
   memo = models.TextField()
-  web_site = models.URLField(null = True, blank=True)
+  web_site = models.URLField(null=True, blank=True)
 
   class Meta:
     db_table = 'person'
     index_together = [['first_name', 'last_name']]
     ordering = ['salary']
+
+  def __str__(self):
+    return f'{self.first_name} {self.last_name}'
